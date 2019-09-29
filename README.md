@@ -1,2 +1,2 @@
-# siya
-Node Simple Intutive Yet-another Architecture- MVC architecture for node
+# SIYA CMS
+Simple I/O Yet-another Architecture- Content Management system in Pure Node
