@@ -9,6 +9,25 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 
+// maps file extention to MIME types
+const mimeType = {
+    'ico': 'image/x-icon',
+    'html': 'text/html',
+    'js': 'text/javascript',
+    'json': 'application/json',
+    'css': 'text/css',
+    'png': 'image/png',
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'wav': 'audio/wav',
+    'mp3': 'audio/mpeg',
+    'svg': 'image/svg+xml',
+    'pdf': 'application/pdf',
+    'doc': 'application/msword',
+    'eot': 'appliaction/vnd.ms-fontobject',
+    'ttf': 'aplication/font-sfnt'
+};
+
 var themeName = 'default';
 
 var ThemeEngine = function (template) {
@@ -16,7 +35,7 @@ var ThemeEngine = function (template) {
     layout = layout.toString();
     var re = /{!([^!}]+)?!}/g, match;
     while (match = re.exec(layout)) {
-        var header = fs.readFileSync('theme/' + themeName + '/html/' + match[1] + '.html');
+        var header = fs.readFileSync('theme/' + themeName + '/includes/' + match[1] + '.html');
         layout = layout.replace(match[0], header.toString());
     }
     return layout;
@@ -33,6 +52,30 @@ var TemplateEngine = function (html, data) {
 
 http.createServer(function (req, res) {
     var q = url.parse(req.url, true);
+
+    fileExtension = q.pathname.split('.').pop();
+    if (q.pathname === '/favicon.ico') {
+        res.end();
+        return;
+    }
+
+    if (mimeType[fileExtension] !== undefined) {
+        try {
+            res.writeHead(200, {'Content-Type': mimeType[fileExtension]});
+            var staticFiles = fs.readFileSync(q.pathname.slice(1));
+            res.end(staticFiles);
+            return;
+        } catch (err) {
+            res.end();
+            return;
+        }
+    }
+
+
+
+
+
+    //htmls
     res.writeHead(200, {'Content-Type': 'text/html'});
     if (q.pathname === '/') {
         var theme = ThemeEngine('home');
@@ -48,7 +91,7 @@ http.createServer(function (req, res) {
         var data = {title: "Siya CMS", metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
             copyrights: "2012 Kavoor Lab pvt Ltd",
-            content: "about us",
+            content: "<h1>about us</h1>",
             leftSidebar: "left Sidebar", rightSidebar: "right Sidebar"};
         var template = TemplateEngine(theme, data);
         res.write(template);
@@ -76,8 +119,3 @@ http.createServer(function (req, res) {
 
 }).listen(8080);
 
-/**
- * > git clone https://krishnakavoor@github.com/krishnakavoor/siyacms.git
-
- * https://krasimirtsonev.com/blog/article/Javascript-template-engine-in-just-20-line
- */
