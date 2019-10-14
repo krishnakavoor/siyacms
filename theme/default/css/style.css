@@ -9,8 +9,11 @@ and open the template in the editor.
 */
 
 h1{
-    color: #ff0000;
+    color: #000;
 }
-body{
-    background: #ccc;
+
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
 }
