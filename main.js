@@ -29,6 +29,7 @@ const mimeType = {
 };
 
 var themeName = 'default';
+var projectUrl = 'http://localhost:8080';
 
 var ThemeEngine = function (template) {
     var layout = fs.readFileSync('theme/' + themeName + '/' + template + '.html');
@@ -73,13 +74,12 @@ http.createServer(function (req, res) {
 
 
 
-
-
     //htmls
     res.writeHead(200, {'Content-Type': 'text/html'});
     if (q.pathname === '/') {
         var theme = ThemeEngine('home');
         var data = {title: "Siya CMS",
+            projectUrl: projectUrl,
             metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
             copyrights: "2012 Kavoor Lab pvt Ltd", content: "<h1>Home page</h1>"};
@@ -88,7 +88,9 @@ http.createServer(function (req, res) {
         res.end();
     } else if (q.pathname === '/about-us') {
         var theme = ThemeEngine('one-sidebar');
-        var data = {title: "Siya CMS", metaKeywords: "meta Keywords",
+        var data = {title: "Siya CMS",
+            projectUrl: projectUrl,
+            metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
             copyrights: "2012 Kavoor Lab pvt Ltd",
             content: "<h1>about us</h1>",
@@ -99,6 +101,7 @@ http.createServer(function (req, res) {
     } else if (q.pathname === '/contact-us') {
         var theme = ThemeEngine('two-sidebar');
         var data = {title: "Siya CMS",
+            projectUrl: projectUrl,
             metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
             copyrights: "2012 Kavoor Lab pvt Ltd",
@@ -110,7 +113,8 @@ http.createServer(function (req, res) {
         res.end();
     } else {
         var theme = ThemeEngine('home');
-        var data = {title: "Siya CMS", metaKeywords: "meta Keywords", metaDescription: "meta Description", copyrights: "2012 Kavoor Lab pvt Ltd", content: "404 Page"};
+        var data = {title: "Siya CMS",
+            projectUrl: projectUrl, metaKeywords: "meta Keywords", metaDescription: "meta Description", copyrights: "2012 Kavoor Lab pvt Ltd", content: "404 Page"};
         var template = TemplateEngine(theme, data);
         res.write(template);
         res.end();
