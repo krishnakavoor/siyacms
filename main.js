@@ -30,6 +30,11 @@ const mimeType = {
 
 var themeName = 'default';
 var projectUrl = 'http://localhost:8080';
+var genericData = {
+    title: "Siya CMS",
+    projectUrl: projectUrl,
+    copyrights: "2012 Kavoor Lab pvt Ltd"
+};
 
 var ThemeEngine = function (template) {
     var layout = fs.readFileSync('theme/' + themeName + '/' + template + '.html');
@@ -73,48 +78,48 @@ http.createServer(function (req, res) {
     }
 
 
-
     //htmls
     res.writeHead(200, {'Content-Type': 'text/html'});
     if (q.pathname === '/') {
         var theme = ThemeEngine('home');
-        var data = {title: "Siya CMS",
-            projectUrl: projectUrl,
+        var pageData = {
             metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
-            copyrights: "2012 Kavoor Lab pvt Ltd", content: "<h1>Home page</h1>"};
+            content: "<h1>Home page</h1>"};
+        var data = Object.assign(genericData, pageData);
         var template = TemplateEngine(theme, data);
         res.write(template);
         res.end();
     } else if (q.pathname === '/about-us') {
         var theme = ThemeEngine('one-sidebar');
-        var data = {title: "Siya CMS",
-            projectUrl: projectUrl,
+        var pageData = {
             metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
-            copyrights: "2012 Kavoor Lab pvt Ltd",
             content: "<h1>about us</h1>",
             leftSidebar: "left Sidebar", rightSidebar: "right Sidebar"};
+        var data = Object.assign(genericData, pageData);
         var template = TemplateEngine(theme, data);
         res.write(template);
         res.end();
     } else if (q.pathname === '/contact-us') {
         var theme = ThemeEngine('two-sidebar');
-        var data = {title: "Siya CMS",
-            projectUrl: projectUrl,
+        var pageData = {
             metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
-            copyrights: "2012 Kavoor Lab pvt Ltd",
             content: "<h1>contact us</h1>",
             leftSidebar: "left Sidebar",
             rightSidebar: "right Sidebar"};
+        var data = Object.assign(genericData, pageData);
         var template = TemplateEngine(theme, data);
         res.write(template);
         res.end();
     } else {
         var theme = ThemeEngine('home');
-        var data = {title: "Siya CMS",
-            projectUrl: projectUrl, metaKeywords: "meta Keywords", metaDescription: "meta Description", copyrights: "2012 Kavoor Lab pvt Ltd", content: "404 Page"};
+        var pageData = {
+            metaKeywords: "meta Keywords",
+            metaDescription: "meta Description",
+            content: "404 Page"};
+        var data = Object.assign(genericData, pageData);
         var template = TemplateEngine(theme, data);
         res.write(template);
         res.end();
