@@ -9,6 +9,23 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 
+var sqlite3 = require('sqlite3').verbose();
+
+var db = new sqlite3.Database('./db/siya', (err) => {
+    if (err) {
+        console.error(err.message);
+    }
+    console.log('Connected to the siya database.');
+});
+
+db.all("SELECT * from sy_newsletter", [], function (err, rows) {
+    if (err) {
+        throw err;
+    }
+    console.log(rows);
+
+});
+
 // maps file extention to MIME types
 const mimeType = {
     'ico': 'image/x-icon',
@@ -85,7 +102,7 @@ http.createServer(function (req, res) {
         var pageData = {
             metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
-            content: "<h1>Home page</h1>"};
+            content: "<h1>Node CMS for every one</h1> <p>Its free to use and easy to develop websites froms scratch</p>"};
         var data = Object.assign(genericData, pageData);
         var template = TemplateEngine(theme, data);
         res.write(template);
@@ -113,11 +130,61 @@ http.createServer(function (req, res) {
         var template = TemplateEngine(theme, data);
         res.write(template);
         res.end();
-    } else {
-        var theme = ThemeEngine('home');
+    } else if (q.pathname === '/admin/login') {
+        var theme = ThemeEngine('two-sidebar');
         var pageData = {
             metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
+            content: "<h1>contact us</h1>",
+            leftSidebar: "left Sidebar",
+            rightSidebar: "right Sidebar"};
+        var data = Object.assign(genericData, pageData);
+        var template = TemplateEngine(theme, data);
+        res.write(template);
+        res.end();
+    } else if (q.pathname === '/admin/home') {
+        var theme = ThemeEngine('two-sidebar');
+        var pageData = {
+            metaKeywords: "meta Keywords",
+            metaDescription: "meta Description",
+            content: "<h1>contact us</h1>",
+            leftSidebar: "left Sidebar",
+            rightSidebar: "right Sidebar"};
+        var data = Object.assign(genericData, pageData);
+        var template = TemplateEngine(theme, data);
+        res.write(template);
+        res.end();
+    } else if (q.pathname === '/admin/page') {
+        var theme = ThemeEngine('two-sidebar');
+        var pageData = {
+            metaKeywords: "meta Keywords",
+            metaDescription: "meta Description",
+            content: "<h1>contact us</h1>",
+            leftSidebar: "left Sidebar",
+            rightSidebar: "right Sidebar"};
+        var data = Object.assign(genericData, pageData);
+        var template = TemplateEngine(theme, data);
+        res.write(template);
+        res.end();
+    } else if (q.pathname === '/api/newsletter/submit') {
+
+
+        var theme = ThemeEngine('two-sidebar');
+        var pageData = {
+            metaKeywords: "meta Keywords",
+            metaDescription: "meta Description",
+            content: "<h1>contact us</h1>",
+            leftSidebar: "left Sidebar",
+            rightSidebar: "right Sidebar"};
+        var data = Object.assign(genericData, pageData);
+        var template = TemplateEngine(theme, data);
+        res.write(template);
+        res.end();
+    } else {
+        var theme = ThemeEngine('home');
+        var pageData = {
+            metaKeywords: "404 Page",
+            metaDescription: "404 Page",
             content: "404 Page"};
         var data = Object.assign(genericData, pageData);
         var template = TemplateEngine(theme, data);
