@@ -9,13 +9,29 @@
         {!head!}
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
             {!header!}
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    {{content}}
+        <div class="container-fluid jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class=" text-center">
+                            {{content}}
+                            <br> 
+                            <form>
+                                <div class="input-group">
+                                    <input type="email" class="form-control" size="50" placeholder="Email Address" required>
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-danger">Subscribe</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <br/> 
+                            <br/> 
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>

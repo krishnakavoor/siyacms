@@ -167,8 +167,6 @@ http.createServer(function (req, res) {
         res.write(template);
         res.end();
     } else if (q.pathname === '/api/newsletter/submit') {
-
-
         var theme = ThemeEngine('two-sidebar');
         var pageData = {
             metaKeywords: "meta Keywords",
