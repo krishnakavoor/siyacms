@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="Keywords" content="{{metaKeywords}}"/>
+        <meta name="Description" content="{{metaDescription}}"/>
+        {!head!}
+    </head>
+    <body>
+         <div class="container-fluid">
+            {!header!}
+        </div>
+        <div class="container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class=" text-center">
+                            {{content}}
+                            <br> 
+                            <form>
+                                <div class="input-group">
+                                    <input type="email" id="newsletter-email" class="form-control" size="50" placeholder="Email Address" required>
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-danger" onclick="newsLetterSubmit();">Subscribe</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <br/> 
+                            <br/> 
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {!footer!}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

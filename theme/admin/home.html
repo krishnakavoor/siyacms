@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="Keywords" content="{{metaKeywords}}"/>
+        <meta name="Description" content="{{metaDescription}}"/>
+        {!head!}
+    </head>
+    <body>
+        <div class="container-fluid">
+            {!header!}
+        </div>
+        <div class="container">
+            <div class="col-md-12">
+                <h1>Pages</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>id</th> <th>slug</th><th>Name</th><th>Content</th><th>Edit/Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{content}}     
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {!footer!}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

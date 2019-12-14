@@ -11,6 +11,6 @@
     "author": "krishnakavoor",
     "contributors": [],
     "dependencies": {
-        "sqlite3": "^4.1.0"
+        "sqlite-sync": "^0.3.9"
     }
 }
