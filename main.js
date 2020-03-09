@@ -9,9 +9,9 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 var sqlite = require('sqlite-sync'); //requiring
-
 sqlite.connect('./db/siya');
-
+var ThemeEngine = require("./lib/ThemeEngine.js");
+var TemplateEngine = require("./lib/ThemplateEngine.js");
 
 
 
@@ -42,25 +42,7 @@ var genericData = {
     themeName: themeName,
     copyrights: "2012 Kavoor Lab pvt Ltd"
 };
-var ThemeEngine = function (template) {
-    var layout = fs.readFileSync('theme/' + themeName + '/' + template + '.html');
-    layout = layout.toString();
-    var re = /{!([^!}]+)?!}/g, match;
-    while (match = re.exec(layout)) {
-        var header = fs.readFileSync('theme/' + themeName + '/includes/' + match[1] + '.html');
-        layout = layout.replace(match[0], header.toString());
-    }
-    return layout;
-}
 
-var TemplateEngine = function (html, data) {
-    var text = html.toString();
-    var re = /{{([^}}]+)?}}/g, match;
-    while (match = re.exec(text)) {
-        text = text.replace(match[0], data[match[1]])
-    }
-    return text;
-}
 
 http.createServer(function (req, res) {
     var q = url.parse(req.url, true);
@@ -85,61 +67,22 @@ http.createServer(function (req, res) {
 
 //htmls
     res.writeHead(200, {'Content-Type': 'text/html'});
-    if (q.pathname === '/') {
-
-        var theme = ThemeEngine('home');
-        var test = sqlite.run("SELECT * from sy_page where id=1");
-
+    var query = "SELECT * from sy_page where slug='" + q.pathname + "'";
+    var page = sqlite.run(query);
+    if (page[0]['id'] !== "undefined") {
+        var theme = ThemeEngine(page[0]['template_name'], themeName);
+        query = "SELECT * from sy_page_content where id=" + page[0]['template_name'];
+        var content = sqlite.run(query);
         var pageData = {
             metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
-            content: test[0]['page_name']};
+            content: "some content"};
         var data = Object.assign(genericData, pageData);
         var template = TemplateEngine(theme, data);
         res.write(template);
         res.end();
-    } else if (q.pathname === '/about-us') {
-        var theme = ThemeEngine('one-sidebar');
-        var pageData = {
-            metaKeywords: "meta Keywords",
-            metaDescription: "meta Description",
-            content: "<h1>about us</h1>",
-            leftSidebar: "left Sidebar", rightSidebar: "right Sidebar"};
-        var data = Object.assign(genericData, pageData);
-        var template = TemplateEngine(theme, data);
-        res.write(template);
-        res.end();
-    } else if (q.pathname === '/contact-us') {
-        res.writeHead(301, {"Location": "/about-us"});
-        return res.end();
-        /* var theme = ThemeEngine('two-sidebar');
-         var pageData = {
-         metaKeywords: "meta Keywords",
-         metaDescription: "meta Description",
-         content: "<h1>contact us</h1>",
-         leftSidebar: "left Sidebar",
-         rightSidebar: "right Sidebar"};
-         var data = Object.assign(genericData, pageData);
-         var template = TemplateEngine(theme, data);
-         res.write(template);
-         res.end();*/
-    } else if (q.pathname === '/api/newsletter/') {
-
-        /*  var theme = ThemeEngine('two-sidebar');
-         var pageData = {
-         metaKeywords: "meta Keywords",
-         metaDescription: "meta Description",
-         content: "<h1>contact us</h1>",
-         leftSidebar: "left Sidebar",
-         rightSidebar: "right Sidebar"};
-         var data = Object.assign(genericData, pageData);
-         var template = TemplateEngine(theme, data);
-         res.write(template);
-         res.end();*/
-
-
     } else {
-        var theme = ThemeEngine('home');
+        var theme = ThemeEngine('home', themeName);
         var pageData = {
             metaKeywords: "404 Page",
             metaDescription: "404 Page",
