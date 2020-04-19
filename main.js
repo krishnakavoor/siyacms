@@ -67,11 +67,11 @@ http.createServer(function (req, res) {
 
 //htmls
     res.writeHead(200, {'Content-Type': 'text/html'});
-    var query = "SELECT * from sy_page where slug='" + q.pathname + "'";
+    var query = "SELECT * from sy_page where url='" + q.pathname + "'";
     var page = sqlite.run(query);
-    if (page[0]['id'] !== "undefined") {
+    if (page.length!==0) {
         var theme = ThemeEngine(page[0]['template_name'], themeName);
-        query = "SELECT * from sy_page_content where id=" + page[0]['template_name'];
+        query = "SELECT * from sy_page_content where id=" + page[0]['id'];
         var content = sqlite.run(query);
         var pageData = {
             metaKeywords: "meta Keywords",

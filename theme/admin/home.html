@@ -21,13 +21,50 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>id</th> <th>slug</th><th>Name</th><th>Content</th><th>Edit/Delete</th>
+                                <th>id</th> <th>slug</th><th>Name</th><th>Edit</th><th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             {{content}}     
                         </tbody>
                     </table>
+                    <div class="modal fade" id="deletePage" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Do you want to Delete? Page Id:<span></span></h4>
+
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="editPage" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Edit Page</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,4 +81,6 @@
             </div>
         </div>
     </body>
+    <script>
+    </script>
 </html>

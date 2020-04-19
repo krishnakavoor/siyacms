@@ -101,7 +101,7 @@ h4 {
 .navbar {
     margin-bottom: 0;
     background-color: #fff;
-    z-index: 9999;
+    z-index: 99;
     border: 0;
     font-size: 12px !important;
     line-height: 1.42857143 !important;

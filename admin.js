@@ -11,6 +11,8 @@ var sqlite = require('sqlite-sync'); //requiring
 sqlite.connect('./db/siya');
 var ThemeEngine = require("./lib/ThemeEngine.js");
 var TemplateEngine = require("./lib/ThemplateEngine.js");
+var Page = require("./lib/Modal/PageModal.js");
+
 
 
 const mimeType = {
@@ -64,20 +66,39 @@ http.createServer(function (req, res) {
             return;
         }
     }
-
+//name //slug //page_type //template_name //status
 
     //htmls
     res.writeHead(200, {'Content-Type': 'text/html'});
     if (q.pathname === '/') {
         var theme = ThemeEngine('home', themeName);
+        var page = Page.getAllPageList();
+        var content = "";
+        page.forEach(element =>
+            content += "<tr><td>" + element.id + "</td><td>" + element.url + "</td><td>" + element.name + "</td><td><a href='page/edit?pageId="+element.id+"&type=edit' onclick='Page.edit()'>Edit</a></td><td><a href='page/edit?pageId="+element.id+"&type=edit' onclick='Page.delete("+element.id+")'>Delete</a></td></tr>");
         var pageData = {
             metaKeywords: "meta Keywords",
             metaDescription: "meta Description",
-            content: "admin"};
+            content: content};
         var data = Object.assign(genericData, pageData);
         var template = TemplateEngine(theme, data);
         res.write(template);
         res.end();
+    } else if (q.pathname === '/page/edit') {
+       /* var theme = ThemeEngine('menu', themeName);
+        var pageData = {
+            metaKeywords: "meta Keywords",
+            metaDescription: "meta Description",
+            content: "<h1>about us</h1>",
+            leftSidebar: "left Sidebar", rightSidebar: "right Sidebar"};
+        var data = Object.assign(genericData, pageData);
+        var template = TemplateEngine(theme, data);
+        res.write(template);
+        res.end();*/
+        
+        
+        
+        
     } else if (q.pathname === '/menu') {
         var theme = ThemeEngine('menu', themeName);
         var pageData = {
